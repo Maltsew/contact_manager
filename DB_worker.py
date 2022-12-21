@@ -43,6 +43,14 @@ def create_test_user():
     ''')
     conn.commit()
     
+def add_contact_to_table(contact_name, contact_email, contact_phone):
+    conn = sqlite3.connect('database')
+    c = conn.cursor()
+    c.execute("INSERT INTO users (user_name, user_email, user_phone)\
+              VALUES (?, ?, ?)",
+              (contact_name, contact_email, contact_phone))
+    conn.commit()
+    
 def drop_user_table():
     conn = sqlite3.connect('database')
     c = conn.cursor()
