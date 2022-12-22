@@ -30,18 +30,18 @@ def display_DB_info():
     df = pd.DataFrame(c.fetchall())
     print(df)
     
-def create_test_user():
-    conn = sqlite3.connect('database')
-    c = conn.cursor()
-    c.execute(
-    '''
-    INSERT INTO users (user_id, user_name, user_email, user_phone)
+# def create_test_user():
+#     conn = sqlite3.connect('database')
+#     c = conn.cursor()
+#     c.execute(
+#     '''
+#     INSERT INTO users (user_id, user_name, user_email, user_phone)
     
-    VALUES
-    (1, 'Maltsev Nikita Andreevich', 'maltsev@lan.po', '1-14-08'),
-    (2, 'Test TEst TEST', 'Test@lan.po', '1-12-08')
-    ''')
-    conn.commit()
+#     VALUES
+#     (1, 'Maltsev Nikita Andreevich', 'maltsev@lan.po', '1-14-08'),
+#     (2, 'Test TEst TEST', 'Test@lan.po', '1-12-08')
+#     ''')
+#     conn.commit()
     
 def add_contact_to_table(contact_name, contact_email, contact_phone):
     conn = sqlite3.connect('database')
