@@ -20,28 +20,18 @@ def create_table_user():
     ''')
     conn.commit()
     
-def display_DB_info():
+def select_all_contacts():
     conn = sqlite3.connect('database')
     c = conn.cursor()
     c.execute(
     '''
-    SELECT * FROM users
+    SELECT user_name, user_email, user_phone FROM users
     ''')
     df = pd.DataFrame(c.fetchall())
+    df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
     print(df)
+
     
-# def create_test_user():
-#     conn = sqlite3.connect('database')
-#     c = conn.cursor()
-#     c.execute(
-#     '''
-#     INSERT INTO users (user_id, user_name, user_email, user_phone)
-    
-#     VALUES
-#     (1, 'Maltsev Nikita Andreevich', 'maltsev@lan.po', '1-14-08'),
-#     (2, 'Test TEst TEST', 'Test@lan.po', '1-12-08')
-#     ''')
-#     conn.commit()
     
 def add_contact_to_table(contact_name, contact_email, contact_phone):
     conn = sqlite3.connect('database')
@@ -59,4 +49,17 @@ def drop_user_table():
     DROP TABLE users
     ''')
     conn.commit()
+    
+def contact_search(contact_info):
+    conn = sqlite3.connect('database')
+    c = conn.cursor()
+    #c.execute("SELECT user_name, user_email, user_phone FROM users WHERE user_name = ? OR user_email = ? OR user_phone = ?",
+    pattern = '%' + str(contact_info) + '%'
+    c.execute("SELECT user_name, user_email, user_phone FROM users WHERE user_name LIKE ? OR user_email LIKE ? OR user_phone LIKE ?",
+
+              (pattern, pattern, pattern)
+              )
+    df = pd.DataFrame(c.fetchall())
+    df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
+    print(df)
     
