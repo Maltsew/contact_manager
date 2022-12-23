@@ -58,7 +58,10 @@ def search_inquiry():
     ''' Поисковой запрос - информация от пользователя о контакте (Данные о ФИО,
     почте либо телефоне'''
     search_info = input('Введите информацию о контакте: ')
-    print('                 Результат поиска: ')
-    contact_search(contact_info=search_info)
+    print('                  Результат поиска: ')
+    if search_info != '':
+        contact_search(contact_info=search_info)
+    else:
+        print('Пустой поисковой запрос!')
     
     

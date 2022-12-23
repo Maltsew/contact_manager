@@ -60,6 +60,9 @@ def contact_search(contact_info):
               (pattern, pattern, pattern)
               )
     df = pd.DataFrame(c.fetchall())
-    df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
-    print(df)
+    if len(df) != 0:
+        df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
+        print(df)
+    else:
+        print('           Поиск', contact_info, 'не вернул результата!')
     
