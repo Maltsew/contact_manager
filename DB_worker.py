@@ -28,8 +28,9 @@ def select_all_contacts():
     SELECT user_name, user_email, user_phone FROM users
     ''')
     df = pd.DataFrame(c.fetchall())
-    df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
-    print(df)
+    if len(df) != 0:
+        df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
+        print(df)
 
     
     
@@ -50,13 +51,15 @@ def drop_user_table():
     ''')
     conn.commit()
     
-def contact_search(contact_info):
+def contact_search_query(contact_info):
+    ''' Выполняет запрос на поиск информации о контакте в соответствии с заданным
+    паттерном contact_info. Поиск происходит по всем полям БД users (с целью
+    ускороить поиск)'''
     conn = sqlite3.connect('database')
     c = conn.cursor()
-    #c.execute("SELECT user_name, user_email, user_phone FROM users WHERE user_name = ? OR user_email = ? OR user_phone = ?",
     pattern = '%' + str(contact_info) + '%'
-    c.execute("SELECT user_name, user_email, user_phone FROM users WHERE user_name LIKE ? OR user_email LIKE ? OR user_phone LIKE ?",
-
+    c.execute("SELECT user_name, user_email, user_phone FROM users \
+              WHERE user_name LIKE ? OR user_email LIKE ? OR user_phone LIKE ?",
               (pattern, pattern, pattern)
               )
     df = pd.DataFrame(c.fetchall())
@@ -65,4 +68,44 @@ def contact_search(contact_info):
         print(df)
     else:
         print('           Поиск', contact_info, 'не вернул результата!')
+        
+def delete_contact_query(contact_name, conctact_email):  
     
+    ''' Выполняет запрос на удаление контактов в БД в соответствии с заданным
+    паттерном contact_info'''
+    
+    conn = sqlite3.connect('database')
+    c = conn.cursor()
+    c.execute("DELETE FROM users WHERE user_name = ? AND user_email = ?",
+              (contact_name, conctact_email)
+              )
+    conn.commit()
+    
+def contact_verification_query(contact_name, conctact_email):
+    
+    ''' Запрос для проверки наличия в БД контакта с данными, в точности
+    соответствующим введенным пользователем'''
+    
+    conn = sqlite3.connect('database')
+    c = conn.cursor()
+    c.execute("SELECT user_name, user_email FROM users \
+              WHERE user_name = ? AND user_email = ?",
+              (contact_name, conctact_email)
+              )
+    if len(c.fetchall()) != 0:
+        return True
+    return False
+    
+    
+def select_all_contacts_for_export(file_name):
+    conn = sqlite3.connect('database')
+    c = conn.cursor()
+    c.execute(
+    '''
+    SELECT user_name, user_email, user_phone FROM users
+    ''')
+    df = pd.DataFrame(c.fetchall())
+    if len(df) != 0:
+        excel_file_name = str(file_name) + ".xlsx"
+        df.to_excel(excel_file_name, sheet_name="Contacts")
+            
