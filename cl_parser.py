@@ -67,5 +67,16 @@ def parse_command_line():
         Экспорт контактов в Excel (.xlsx) \
             ___________________________________________________'
     )
+    parser.add_argument(
+        '-c',
+        '--change_database',
+        nargs='?',
+        const='',
+        type=str,
+        default=None,
+        help='-------------------------------------------------\
+        Выюор базы данных для хранения контактов \
+            ___________________________________________________'
+    )
     my_namespace = parser.parse_args()
     return my_namespace
