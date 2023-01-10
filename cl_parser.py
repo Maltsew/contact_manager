@@ -12,7 +12,7 @@ def parse_command_line():
     parser = argparse.ArgumentParser(description='Телефонная книга')
     parser.add_argument(
         '-a',
-        '--add_user',
+        '--add_contact',
         nargs='?',
         const='',
         type=str,
@@ -68,7 +68,7 @@ def parse_command_line():
             ___________________________________________________'
     )
     parser.add_argument(
-        '-c',
+        '-change',
         '--change_database',
         nargs='?',
         const='',
