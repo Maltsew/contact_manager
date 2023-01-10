@@ -65,7 +65,7 @@ def search_inquiry():
         print('Пустой поисковой запрос!')
     
 def delete_contact():
-    delete_info = input('Какой контакт/контакты следует удалить? ')
+    delete_info = input('Введите информацию о контакте: ')
     print('                  Результат поиска: ')
     if delete_info != '':
         contact_search_query(contact_info=delete_info)
