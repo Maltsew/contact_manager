@@ -8,6 +8,9 @@ Created on Sat Dec 24 15:24:58 2022
 from pathlib import Path
 import glob, os
 #from typing import Union
+import sys
+
+
 
 
 def get_project_root()->Path:
@@ -67,6 +70,7 @@ def db_selector():
             selected_num = int(input('Выберите номер базы данных для работы: '))
             chosen_base = database_browser()
             if selected_num in chosen_base:
+                #print(chosen_base[selected_num])
                 return chosen_base[selected_num]
             else:
                 print('Невозможно выбрать базу', selected_num)
@@ -87,3 +91,6 @@ def create_new_database():
         new_db_name = input('Введите название: ')
         new_db_name = new_db_name + '.db'
         return new_db_name
+
+
+selected_db = db_selector()
