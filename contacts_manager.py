@@ -8,7 +8,8 @@ Created on Tue Dec 20 18:16:21 2022
 
 from cl_parser import parse_command_line
 from DB_worker import *
-from contact_validators import contact_name_is_cyrrilic, contact_email_is_valid, contact_phone_is_valid
+from contact_validators import *
+from bcolors import bcolors
 
 
 
@@ -20,13 +21,13 @@ def validate_contact():
                 if contact_phone_is_valid(new_contact_phone):
                     return True
                 else:
-                    print('Номер телефона введен неверно')
+                    print(f"{bcolors.FAIL}Номер телефона введен неверно!{bcolors.ENDC}")
             else:
-                print('Адрес почты введен неверно')
+                print(f"{bcolors.FAIL}Адрес почты введен неверно!{bcolors.ENDC}")
         else:
-            print('Имя введено неверно')
+            print(f"{bcolors.FAIL}ФИО введено неверно!{bcolors.ENDC}")
     except TypeError:
-        print('!!!')
+        print(f"{bcolors.FAIL}Ошибка ввода данных!{bcolors.ENDC}")
     return False
 
     
@@ -36,7 +37,8 @@ def add_contact():
         add_contact_to_table(contact_name=contact_name,
                              contact_email=contact_email,
                              contact_phone=contact_phone)
-        print('Контакт добавлен!')
+        #print('Контакт добавлен!')
+        print(f"{bcolors.OKGREEN}Контакт добавлен!{bcolors.ENDC}")
     
     
 def show_all_contacts():
@@ -44,9 +46,7 @@ def show_all_contacts():
     return all_contacts_info
 
 
-# Перенести в интерфейсы
 def contact_info_insertion():
-    #print('Введите ФИО')
     input_name = input('Введите ФИО: ')
     input_email = input('Введите адрес электронной почты: ')
     input_phone = input('Введите номер телефона:')
@@ -58,45 +58,42 @@ def search_inquiry():
     ''' Поисковой запрос - информация от пользователя о контакте (Данные о ФИО,
     почте либо телефоне'''
     search_info = input('Введите информацию о контакте: ')
-    print('                  Результат поиска: ')
+    #print('                  Результат поиска: ')
+    print(f"{bcolors.OKCYAN}                  Результат поиска:{bcolors.ENDC}")
     if search_info != '':
         contact_search_query(contact_info=search_info)
     else:
-        print('Пустой поисковой запрос!')
+        #print('Пустой поисковой запрос!')
+        print(f"{bcolors.FAIL}Пустой поисковой запрос!{bcolors.ENDC}")
     
 def delete_contact():
     delete_info = input('Введите информацию о контакте: ')
-    print('                  Результат поиска: ')
+    print(f"{bcolors.OKCYAN}                  Результат поиска:{bcolors.ENDC}")
     if delete_info != '':
         contact_search_query(contact_info=delete_info)
         contact_name_to_del = input('Введите полное имя контакта: ')
         contact_email_to_del = input('Введите точный адрес эл. почты: ')
-        print('Будет удален контакт ',
-                                 ' ',
-                                 contact_name_to_del,
-                                 ' ',
-                                 contact_email_to_del)
-        
+        print(f"{bcolors.WARNING}", 'Будет удален контакт ',
+              contact_name_to_del, contact_email_to_del , f"{bcolors.ENDC}")
+
         deletion_confirm = input('Продолжить? (Y / N): ')
         if deletion_confirm in ('Y', 'Yes', 'y', 'yes', 'YES'):
             if contact_verification_query(contact_name=contact_name_to_del, conctact_email=contact_email_to_del):
                 delete_contact_query(contact_name=contact_name_to_del, conctact_email=contact_email_to_del)
-                print('Контакт удален!')
+                print(f"{bcolors.OKGREEN}Контакт удален!{bcolors.ENDC}")
             else:
-                print('Ошибка ввода данных!')
-                print('Информация о контакте ',
-                      contact_name_to_del,
-                      ' ',
-                      contact_email_to_del,
-                      ' ',
-                      'не найдена!')
+                print(f"{bcolors.FAIL}Ошибка ввода данных!{bcolors.ENDC}")
+                print(f"{bcolors.FAIL}", 'Информация о контакте ',
+                contact_name_to_del, contact_email_to_del, 'не найдена',
+                f"{bcolors.ENDC}")
         else:
-            print('Отмена удаления')
+            print(f"{bcolors.WARNING}Отмена удаления{bcolors.ENDC}")
     else:
-        print('Ошибка запроса удаления')
+        print(f"{bcolors.FAIL}Ошибка запроса удаления{bcolors.ENDC}")
         
         
 def export_contacts():
     file_name = input('Как назвать файл? ')
     select_all_contacts_for_export(file_name=file_name)
+    print(f"{bcolors.OKGREEN}Экспорт контактов прошел успешно!{bcolors.ENDC}")
     

@@ -10,6 +10,7 @@ from DB_worker import *
 from cl_parser import parse_command_line
 from contacts_manager import *
 from DB_logic import db_selector, create_new_database
+from bcolors import bcolors
 
 
 space = parse_command_line()
@@ -22,8 +23,10 @@ def command_add_contact():
     elif space.add_contact == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для добавления нового контакта --> {space.add_user}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}",
+              'Недопустимый ввод для добавления нового контакта --->',
+                f"{space.add_contact}", f"{bcolors.ENDC}")
         
 def command_show_contact():
     create_table_user()
@@ -36,8 +39,10 @@ def command_show_contact():
     elif space.show_contacts == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для показа списка всех контактов --> {space.show_contacts}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}",
+              'Недопустимый ввод для отображения списка контактов --->',
+                f"{space.show_contacts}", f"{bcolors.ENDC}")
         
 
 def command_find_contact():
@@ -47,8 +52,10 @@ def command_find_contact():
     elif space.find_contact == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для поиска контактов --> {space.find_contact}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}",
+              'Недопустимый ввод для поиска контакта --->',
+                f"{space.find_contact}", f"{bcolors.ENDC}")
         
 
 def command_remove_contact():
@@ -58,8 +65,10 @@ def command_remove_contact():
     elif space.remove_contact == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для поиска контактов --> {space.remove_contact}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}",
+              'Недопустимый ввод для удаления контакта --->',
+                f"{space.remove_contact}", f"{bcolors.ENDC}")
         
         
 def command_export_contacts():
@@ -69,30 +78,38 @@ def command_export_contacts():
     elif space.export_contact == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для экспорта контактов --> {space.export_contact}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}",
+              'Недопустимый ввод для экспорта контактов --->',
+                f"{space.export_contact}", f"{bcolors.ENDC}")
         
         
 def command_change_database():
     #create_table_user()
     if space.change_database == '':
+        # Убрал. Нужно доработать механизм выбора бд
+        pass
         # вызван селектор баз, вернет имя выбранной базы или создаст новую если таковой нет и вернет ее имя
-         p = db_selector()
-         print(p)
+         # db_selector()
     elif space.change_database == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для выбора базы данных --> {space.change_database}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        # print(f"{bcolors.FAIL}",
+        #       'Недопустимый ввод для экспорта контактов --->',
+        #         f"{space.export_contact}", f"{bcolors.ENDC}")
         
 def command_create_database():
     #create_table_user()
     if space.create_database == '':
-        # вызван селектор баз, вернет имя выбранной базы или создаст новую если таковой нет и вернет ее имя
-        create_new_database()
+        # Убрал. Нужно доработать механизм выбора бд
+        pass
+        #create_new_database()
     elif space.create_database == None:
         return False
     else:
-        print("Ошибка!")
-        print(f"Недопустимый ввод для выбора базы данных --> {space.create_database}")
+        print(f"{bcolors.FAIL}Ошибка!{bcolors.ENDC}")
+        # print(f"{bcolors.FAIL}",
+        #       'Недопустимый ввод для экспорта контактов --->',
+        #         f"{space.export_contact}", f"{bcolors.ENDC}")
     

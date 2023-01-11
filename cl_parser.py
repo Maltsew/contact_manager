@@ -9,7 +9,7 @@ Created on Tue Dec 20 17:07:19 2022
 import argparse
 
 def parse_command_line():
-    parser = argparse.ArgumentParser(description='Телефонная книга')
+    parser = argparse.ArgumentParser(description='----------------------Телефонная книга----------------------')
     parser.add_argument(
         '-a',
         '--add_contact',
