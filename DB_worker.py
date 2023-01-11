@@ -37,7 +37,6 @@ def select_all_contacts():
     df = pd.DataFrame(c.fetchall())
     if len(df) != 0:
         df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
-        #print(df)
         print(f"{bcolors.OKCYAN}",f"{bcolors.UNDERLINE}", df, f"{bcolors.ENDC}")
         return True
     else:
@@ -76,7 +75,7 @@ def contact_search_query(contact_info):
     df = pd.DataFrame(c.fetchall())
     if len(df) != 0:
         df.columns = ['ФИО', 'Адрес эл. почты', 'Телефон']
-        print(df)
+        print(f"{bcolors.OKCYAN}",f"{bcolors.UNDERLINE}", df, f"{bcolors.ENDC}")
         return True
     else:
         #print('           Поиск', contact_info, 'не вернул результата!')
@@ -124,7 +123,6 @@ def select_all_contacts_for_export(file_name='default'):
             excel_file_name = str(file_name) + ".xlsx"
             df.to_excel(excel_file_name, sheet_name="Contacts")
         except ValueError:
-            #print('Имя не может быть пустым')
             print(f"{bcolors.FAIL}Имя не может быть пустым!{bcolors.ENDC}")
             return False
             
