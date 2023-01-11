@@ -93,4 +93,4 @@ def create_new_database():
         return new_db_name
 
 
-selected_db = db_selector()
+#selected_db = db_selector()

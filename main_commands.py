@@ -9,7 +9,7 @@ Created on Fri Dec 30 14:38:43 2022
 from DB_worker import *
 from cl_parser import parse_command_line
 from contacts_manager import *
-from DB_logic import db_selector
+from DB_logic import db_selector, create_new_database
 
 
 space = parse_command_line()
@@ -20,7 +20,6 @@ def command_add_contact():
     if space.add_contact == '':
         add_contact()
     elif space.add_contact == None:
-        print('Пустой ввод')
         return False
     else:
         print("Ошибка!")
@@ -85,4 +84,15 @@ def command_change_database():
     else:
         print("Ошибка!")
         print(f"Недопустимый ввод для выбора базы данных --> {space.change_database}")
+        
+def command_create_database():
+    #create_table_user()
+    if space.create_database == '':
+        # вызван селектор баз, вернет имя выбранной базы или создаст новую если таковой нет и вернет ее имя
+        create_new_database()
+    elif space.create_database == None:
+        return False
+    else:
+        print("Ошибка!")
+        print(f"Недопустимый ввод для выбора базы данных --> {space.create_database}")
     

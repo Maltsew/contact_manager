@@ -8,12 +8,13 @@ Created on Tue Dec 20 15:22:19 2022
 
 import sqlite3
 import pandas as pd
-from DB_logic import selected_db
+#from DB_logic import selected_db
 
 
 
-global selected_db
+#global selected_db
 #database_name = selected_db
+selected_db = 'contacts.db'
 
 def create_table_user():
     conn = sqlite3.connect(selected_db)
