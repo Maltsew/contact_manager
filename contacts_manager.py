@@ -94,6 +94,9 @@ def delete_contact():
         
 def export_contacts():
     file_name = input('Как назвать файл? ')
-    select_all_contacts_for_export(file_name=file_name)
-    print(f"{bcolors.OKGREEN}Экспорт контактов прошел успешно!{bcolors.ENDC}")
+    export_file = select_all_contacts_for_export(file_name=file_name)
+    if export_file:
+        print(f"{bcolors.OKGREEN}Экспорт контактов прошел успешно!{bcolors.ENDC}")
+    else:
+       print(f"{bcolors.FAIL}Ошибка во время экспорта контактов!{bcolors.ENDC}") 
     
