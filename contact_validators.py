@@ -10,7 +10,8 @@ import re
 
 
 def contact_name_is_cyrrilic(text):
-    return bool(re.search('[а-яА-Я]', text))
+    return bool(re.match('[(а-яА-Я) + \s + \-]', text))
+    #return bool(re.fullmatch('?:[А-Я](?:\.|[а-я]+)', text))
 
 def contact_email_is_valid(email):
     return bool(re.fullmatch(
