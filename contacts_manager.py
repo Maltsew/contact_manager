@@ -3,6 +3,13 @@
 Created on Tue Dec 20 18:16:21 2022
 
 @author: n.maltsev
+
+Модуль для реализации взаимодейтсвия данных, полученных от пользователя
+и данными из БД sqlite3.
+Модуль содержит функции-контроллеры. Полученные от пользователя данные проходят
+валидацию и проверку на правильность ввода. Валидированные данные передаются 
+как аргументы в функции модуля взаимодействия с БД DB_worker.
+
 """
 
 
@@ -14,6 +21,17 @@ from bcolors import bcolors
 
 
 def validate_contact():
+    
+    ''' Функция реализует проверку введенных пользователем данных.
+    1) Вызов contact_name_is_cyrrilic для введенного ФИО
+    2) Вызов contact_email_is_valid для адреса эл. почты
+    3) Вызов contact_phone_is_valid для телефона
+    Валидация происходит поочередно 1), 2) и 3), и если все
+    пункты пройдены - возвращает True,
+    Иначе возвращает сообщение о несоответствии введенным данным и
+    False для проверки каждого пунка валидатора
+    '''
+    
     try:
         new_contact_name, new_contact_email, new_contact_phone = contact_info_insertion()
         if contact_name_is_cyrrilic(new_contact_name):
@@ -32,33 +50,56 @@ def validate_contact():
 
     
 def add_contact():
+    
+    ''' После проверки на валидность, добавляет контакт в БД
+    посредством вызова add_contact_to_table из модуля взаимодействия
+    с БД DB_worker
+    После добавления в таблицу users выводит сообщение об успешном
+    добавлении контакта'''
+    
     if validate_contact():
         contact_name, contact_email, contact_phone = data
         add_contact_to_table(contact_name=contact_name,
                              contact_email=contact_email,
                              contact_phone=contact_phone)
-        #print('Контакт добавлен!')
         print(f"{bcolors.OKGREEN}Контакт добавлен!{bcolors.ENDC}")
     
     
 def show_all_contacts():
+    
+    ''' посредством вызова select_all_contacts из модуля взаимодействия
+    с БД DB_worker получает список всех имеющихся в таблице users контактов
+    в виде обхекта DataFrame'''
+    
     all_contacts_info = select_all_contacts()
     return all_contacts_info
 
 
 def contact_info_insertion():
+    
+    ''' Добавление нового контакта
+    Последовательно принимает от пользователя данные о контакте
+    Полученные данные кладутся в кортеж data, который хранит их для
+    дальнейшего использования функцией add_contact.'''
+    
     input_name = input('Введите ФИО: ')
     input_email = input('Введите адрес электронной почты: ')
     input_phone = input('Введите номер телефона:')
     global data
     data = (input_name, input_email, input_phone)
-    return input_name, input_email, input_phone
+    return data
 
 def search_inquiry():
+    
     ''' Поисковой запрос - информация от пользователя о контакте (Данные о ФИО,
-    почте либо телефоне'''
+    почте либо телефоне)
+    Введенная информация, если она есть и не пустая, посредством вызова
+    contact_search_query из модуля взаимодействия с БД DB_worker передается
+    в запрос поиска по таблице users.
+    Поиск осуществляется по всем полям по ключевому слову (см. документацию
+    contact_search_query). Если запрос пустой - возвращает сообщение об ошибке'''
+    
     search_info = input('Введите информацию о контакте: ')
-    #print('                  Результат поиска: ')
     print(f"{bcolors.OKCYAN}                  Результат поиска:{bcolors.ENDC}")
     if search_info != '':
         contact_search_query(contact_info=search_info)
@@ -67,6 +108,19 @@ def search_inquiry():
         print(f"{bcolors.FAIL}Пустой поисковой запрос!{bcolors.ENDC}")
     
 def delete_contact():
+    
+    ''' Функция удаления контакта из таблицы users
+    Удаление происходит в 2 этапа:
+        1) Пользователь вводит информацию о контакте, который следует удалить.
+    Посредством вызова contact_verification_query из модуля взаимодействия
+    с БД DB_worker список всех контактов, удовлетворяющих поисковому запросу,
+    выводится пользователю в терминал.
+        2) На втором этапе происходит непосредственно удаление:
+    Посредством вызова delete_contact_query из модуля взаимодействия
+    с БД DB_worker происходит запрос на удалениие данных (см. документацию
+    delete_contact_query модуля DB_worker), в точности соответсвующих
+    введенным пользователем в запросе на удаление'''
+    
     delete_info = input('Введите информацию о контакте: ')
     print(f"{bcolors.OKCYAN}                  Результат поиска:{bcolors.ENDC}")
     if delete_info != '':
@@ -93,6 +147,11 @@ def delete_contact():
         
         
 def export_contacts():
+    
+    ''' Экспорт контактов в Excel-файл
+    Функция является оберткой для функции select_all_contacts_for_export,
+    предназначенная для задания имени для файла'''
+    
     file_name = input('Как назвать файл? ')
     export_file = select_all_contacts_for_export(file_name=file_name)
     if export_file:

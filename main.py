@@ -6,6 +6,8 @@
 import functools
 from main_commands import *
 
+
+
 if __name__ == '__main__':
     command_add_contact()
     command_show_contact()

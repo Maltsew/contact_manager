@@ -3,6 +3,11 @@
 Created on Tue Dec 20 15:22:19 2022
 
 @author: n.maltsev
+
+Модуль взаимодействия приложения с БД sqlite3. БД содержит одну таблицу users
+с полями user_id тип INTEGER PRIMARY KEY, user_name тип данных TEXT,
+user_email тип данных TEXT, user_phone тип данных TEXT.
+Для отображения результатов SELECT используется DataFrame Pandas.
 """
 
 
