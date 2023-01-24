@@ -17,10 +17,14 @@ from cl_parser import parse_command_line
 from DB_worker import *
 from contact_validators import *
 from bcolors import bcolors
+from typing import NewType
+
+# Пользовательский тип возвращаемых данных - DataFrame
+DataFrame = NewType('DataFrame', pd.core.series.Series)
 
 
 
-def validate_contact():
+def validate_contact() -> bool:
     
     ''' Функция реализует проверку введенных пользователем данных.
     1) Вызов contact_name_is_cyrrilic для введенного ФИО
@@ -49,7 +53,7 @@ def validate_contact():
     return False
 
     
-def add_contact():
+def add_contact() -> None:
     
     ''' После проверки на валидность, добавляет контакт в БД
     посредством вызова add_contact_to_table из модуля взаимодействия
@@ -65,7 +69,7 @@ def add_contact():
         print(f"{bcolors.OKGREEN}Контакт добавлен!{bcolors.ENDC}")
     
     
-def show_all_contacts():
+def show_all_contacts() -> DataFrame:
     
     ''' посредством вызова select_all_contacts из модуля взаимодействия
     с БД DB_worker получает список всех имеющихся в таблице users контактов
@@ -75,7 +79,7 @@ def show_all_contacts():
     return all_contacts_info
 
 
-def contact_info_insertion():
+def contact_info_insertion() -> tuple:
     
     ''' Добавление нового контакта
     Последовательно принимает от пользователя данные о контакте
@@ -89,7 +93,7 @@ def contact_info_insertion():
     data = (input_name, input_email, input_phone)
     return data
 
-def search_inquiry():
+def search_inquiry() -> None:
     
     ''' Поисковой запрос - информация от пользователя о контакте (Данные о ФИО,
     почте либо телефоне)
@@ -107,7 +111,7 @@ def search_inquiry():
         #print('Пустой поисковой запрос!')
         print(f"{bcolors.FAIL}Пустой поисковой запрос!{bcolors.ENDC}")
     
-def delete_contact():
+def delete_contact() -> None:
     
     ''' Функция удаления контакта из таблицы users
     Удаление происходит в 2 этапа:
@@ -146,7 +150,7 @@ def delete_contact():
         print(f"{bcolors.FAIL}Ошибка запроса удаления{bcolors.ENDC}")
         
         
-def export_contacts():
+def export_contacts() -> None:
     
     ''' Экспорт контактов в Excel-файл
     Функция является оберткой для функции select_all_contacts_for_export,

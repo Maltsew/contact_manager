@@ -22,7 +22,7 @@ from bcolors import bcolors
 #database_name = selected_db
 selected_db = 'contacts.db'
 
-def create_table_user():
+def create_table_user() -> None:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Создает таблицу users, если таблица еще не создана.
@@ -41,7 +41,7 @@ def create_table_user():
     ''')
     conn.commit()
     
-def select_all_contacts():
+def select_all_contacts() -> bool:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет запрос на получение всех данных из таблицы users.
@@ -67,7 +67,7 @@ def select_all_contacts():
 
     
     
-def add_contact_to_table(contact_name, contact_email, contact_phone):
+def add_contact_to_table(contact_name: str, contact_email: str, contact_phone: str) -> None:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет вставку аргументов (contact_name, contact_email, contact_phone)
@@ -81,7 +81,7 @@ def add_contact_to_table(contact_name, contact_email, contact_phone):
               (contact_name, contact_email, contact_phone))
     conn.commit()
     
-def drop_user_table():
+def drop_user_table() -> None:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет удаление таблицы users'''
@@ -94,7 +94,7 @@ def drop_user_table():
     ''')
     conn.commit()
     
-def contact_search_query(contact_info):
+def contact_search_query(contact_info: str) -> bool:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет запрос на поиск информации о контакте в соответствии с заданной
@@ -121,7 +121,7 @@ def contact_search_query(contact_info):
         print(f"{bcolors.FAIL}",'           Поиск', contact_info, ' не вернул результата!', f"{bcolors.ENDC}")
         return False
         
-def delete_contact_query(contact_name, conctact_email):  
+def delete_contact_query(contact_name: str, conctact_email: str) -> None:  
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет запрос на удаление информации о контакте в соответствии с заданными
@@ -135,7 +135,7 @@ def delete_contact_query(contact_name, conctact_email):
               )
     conn.commit()
     
-def contact_verification_query(contact_name, conctact_email):
+def contact_verification_query(contact_name: str, conctact_email: str) -> bool:
     
     '''  Подключается к БД с именем selected_db с помощью sqlite3 драйвера. 
     Выполняет запрос для получения из БД контакта с данными, в точности
@@ -153,7 +153,7 @@ def contact_verification_query(contact_name, conctact_email):
     return False
     
     
-def select_all_contacts_for_export(file_name='default'):
+def select_all_contacts_for_export(file_name: str='default') -> bool:
     
     ''' Подключается к БД с именем selected_db с помощью sqlite3 драйвера.
     Выполняет запрос на получение всех данных из таблицы users.
@@ -162,7 +162,8 @@ def select_all_contacts_for_export(file_name='default'):
     заданным пользователем через терминал. Если users не содержит ни одной
     записи, в excel будет записано ничего, т.е. просто создан файл с введенным
     именем
-    excel файлу необходимо задать валидное имя,'''
+    excel файлу необходимо задать валидное имя
+    По умолчанию имя задано как 'default', если имя не задано пользователем '''
     
     conn = sqlite3.connect(selected_db)
     c = conn.cursor()

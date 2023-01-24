@@ -13,7 +13,7 @@ Created on Tue Dec 20 17:07:19 2022
 
 import argparse
 
-def parse_command_line():
+def parse_command_line() -> None:
     parser = argparse.ArgumentParser(description='----------------------Менеджер контактов----------------------')
     parser.add_argument(
         '-a',

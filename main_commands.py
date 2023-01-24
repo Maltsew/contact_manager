@@ -25,14 +25,15 @@ cl_parser (После создания объекта парсера коман�
 from DB_worker import *
 from cl_parser import parse_command_line
 from contacts_manager import *
-from DB_logic import db_selector, create_new_database
+#from DB_logic import db_selector, create_new_database
 from bcolors import bcolors
+from typing import Union
 
 # Объект парсера командной строки
 space = parse_command_line()
 
 
-def command_add_contact():
+def command_add_contact() -> Union[bool, None]:
     
     ''' Вызов добавления нового контакта происходит при вводе в терминал
     аргумента -а парсера командной строки.
@@ -51,7 +52,7 @@ def command_add_contact():
               'Недопустимый ввод для добавления нового контакта --->',
                 f"{space.add_contact}", f"{bcolors.ENDC}")
         
-def command_show_contact():
+def command_show_contact() -> Union[bool, None]:
     
     ''' Вызов предоствления списка всех контактов происходит при вводе в терминал
     аргумента -ls парсера командной строки.
@@ -75,7 +76,7 @@ def command_show_contact():
                 f"{space.show_contacts}", f"{bcolors.ENDC}")
         
 
-def command_find_contact():
+def command_find_contact() -> Union[bool, None]:
     
     ''' Вызов поиска контакта происходит при вводе в терминал
     аргумента -find парсера командной строки.
@@ -95,7 +96,7 @@ def command_find_contact():
                 f"{space.find_contact}", f"{bcolors.ENDC}")
         
 
-def command_remove_contact():
+def command_remove_contact() -> Union[bool, None]:
     
     ''' Вызов удаления контакта происходит при вводе в терминал
     аргумента -rm парсера командной строки.
@@ -115,7 +116,7 @@ def command_remove_contact():
                 f"{space.remove_contact}", f"{bcolors.ENDC}")
         
         
-def command_export_contacts():
+def command_export_contacts() -> Union[bool, None]:
     
     ''' Вызов экспорта контактов происходит при вводе в терминал
     аргумента -export парсера командной строки.
