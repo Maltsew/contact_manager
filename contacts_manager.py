@@ -18,6 +18,7 @@ from DB_worker import *
 from contact_validators import *
 from bcolors import bcolors
 from typing import NewType
+import pandas as pd
 
 # Пользовательский тип возвращаемых данных - DataFrame
 DataFrame = NewType('DataFrame', pd.core.series.Series)
